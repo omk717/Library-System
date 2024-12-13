@@ -1,0 +1,37 @@
+🚀 SQL Project: Library Management System
+
+I am excited to share my recent SQL project, where I designed and implemented a Library Management System using various SQL concepts. This project involved working with multiple tables to manage library data, such as books, members, and book issues.
+
+Key Features of the Project:
+
+🔹 Database Schema: Created tables for members, books, and issue records with constraints.
+
+🔹 Data Manipulation: Inserted, updated, and deleted records with transactional control.
+
+🔹 SQL Operations: Utilized DDL, DML, and TCL commands like CREATE, ALTER, DROP, INSERT, UPDATE, COMMIT, ROLLBACK, and more.
+
+🔹 Data Integrity: Implemented primary and foreign keys, constraints like check and not-null, and handled data modifications using transactions.
+
+🔹 Advanced SQL: Applied SQL queries to generate reports, manage constraints, and optimize data management.
+
+Project Overview:
+
+The project was divided into multiple tasks, including:
+
+Table creation with and without constraints.
+
+Data insertion into various tables.
+
+Transaction management (COMMIT, ROLLBACK, SAVEPOINT).
+
+Foreign key constraints between tables.
+
+Data modifications (updating records, handling errors, and constraints).
+
+🔧 Technologies Used: SQL, Database Design, Oracle
+
+A special thanks to my trainer Tejashri Fegade, for guiding me through this project and helping me enhance my SQL skills!
+
+
+
+#SQL #DatabaseManagement #LibrarySystem #Project #Learning #SQLProject #OracleDB #Tech #DataManagement
