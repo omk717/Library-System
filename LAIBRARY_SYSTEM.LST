@@ -1,37 +1,904 @@
-🚀 SQL Project: Library Management System
+SQL> CREATE TABLE MEMBER
+  2  (
+  3  MEMBER_ID NUMBER(5),
+  4  MEMBER_NAME VARCHAR2(30),
+  5  MEMBER_ADDRESS VARCHAR2(50),
+  6  ACC_OPEN_DATE DATE,
+  7  MEMBERSHIP_TYPE VARCHAR2(20),
+  8  FEE_PAID NUMBER(4),
+  9  MAX_BOOKS_ALLOWED NUMBER(2),
+ 10  PENALTY_AMOUNT NUMBER(7,2)
+ 11  );
 
-I am excited to share my recent SQL project, where I designed and implemented a Library Management System using various SQL concepts. This project involved working with multiple tables to manage library data, such as books, members, and book issues.
+Table created.
 
-Key Features of the Project:
+SQL> CREATE TABLE BOOKS
+  2  (
+  3  BOOK_NO NUMBER(6),
+  4  BOOK_NAME VARCHAR2(30),
+  5  AUTHOR_NAME VARCHAR2(30),
+  6  COST NUMBER(7,2),
+  7  CATEGORY CHAR(10)
+  8  )
+  9  ;
 
-🔹 Database Schema: Created tables for members, books, and issue records with constraints.
+Table created.
 
-🔹 Data Manipulation: Inserted, updated, and deleted records with transactional control.
+SQL> CREATE TABLE ISSUE
+  2  (
+  3  LIB_ISSUE_ID NUMBER(10),
+  4  BOOK_NO NUMBER(6),
+  5  MEMBER_ID NUMBER(5),
+  6  ISSUE_DATE DATE,
+  7  RETURN_DATE DATE
+  8   );
 
-🔹 SQL Operations: Utilized DDL, DML, and TCL commands like CREATE, ALTER, DROP, INSERT, UPDATE, COMMIT, ROLLBACK, and more.
+Table created.
 
-🔹 Data Integrity: Implemented primary and foreign keys, constraints like check and not-null, and handled data modifications using transactions.
+SQL> DESC MEMBER;
+ Name                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -------- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ MEMBER_ID                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  NUMBER(5)
+ MEMBER_NAME                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                VARCHAR2(30)
+ MEMBER_ADDRESS                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             VARCHAR2(50)
+ ACC_OPEN_DATE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              DATE
+ MEMBERSHIP_TYPE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            VARCHAR2(20)
+ FEE_PAID                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   NUMBER(4)
+ MAX_BOOKS_ALLOWED                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          NUMBER(2)
+ PENALTY_AMOUNT                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             NUMBER(7,2)
 
-🔹 Advanced SQL: Applied SQL queries to generate reports, manage constraints, and optimize data management.
+SQL> DESC BOOKS;
+ Name                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -------- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ BOOK_NO                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    NUMBER(6)
+ BOOK_NAME                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  VARCHAR2(30)
+ AUTHOR_NAME                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                VARCHAR2(30)
+ COST                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       NUMBER(7,2)
+ CATEGORY                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   CHAR(10)
 
-Project Overview:
+SQL> DESC ISSUE;
+ Name                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -------- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ LIB_ISSUE_ID                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               NUMBER(10)
+ BOOK_NO                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    NUMBER(6)
+ MEMBER_ID                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  NUMBER(5)
+ ISSUE_DATE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 DATE
+ RETURN_DATE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                DATE
 
-The project was divided into multiple tasks, including:
+SQL> DROP TABLE MEMBER;
 
-Table creation with and without constraints.
+Table dropped.
 
-Data insertion into various tables.
+SQL> CREATE TABLE MEMBER
+  2  (
+  3  MEMBER_ID NUMBER(5) PRIMARY KEY,
+  4  MEMBER_NAME VARCHAR(30),
+  5  MEMBER_ADDRESS VARCHAR(50),
+  6  ACC_OPEN_DATE DATE,
+  7  MEMBERSHIP_TYPE VARCHAR2(20),
+  8  FEES_PAID NUMBER(4),
+  9  MAX_BOOKS_ALLOWED NUMBER(2),
+ 10  PENALTY_AMOUNT NUMBER(7,2),
+ 11  CHECK(MEMBERSHIP_TYPE IN ('LIFETIME','ANNUAL','HALF YEARLY','QUARTERLY'))
+ 12  );
 
-Transaction management (COMMIT, ROLLBACK, SAVEPOINT).
+Table created.
 
-Foreign key constraints between tables.
+SQL> ALTER TABLE MEMBER
+  2  MODIFY MEMBER_NAME VARCHAR2(30);
 
-Data modifications (updating records, handling errors, and constraints).
+Table altered.
 
-🔧 Technologies Used: SQL, Database Design, Oracle
+SQL> ALTER TABLE ISSUE
+  2  ADD REFERENCE CHAR(30) NOT NULL;
 
-A special thanks to my trainer Tejashri Fegade, for guiding me through this project and helping me enhance my SQL skills!
+Table altered.
+
+SQL> ALTER TABLE ISSUE
+  2  DROP COLUMN REFERENCE;
+
+Table altered.
+
+SQL> DESC ISSUE;
+ Name                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -------- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ LIB_ISSUE_ID                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               NUMBER(10)
+ BOOK_NO                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    NUMBER(6)
+ MEMBER_ID                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  NUMBER(5)
+ ISSUE_DATE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 DATE
+ RETURN_DATE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                DATE
+
+SQL> RENAME ISSUE TO LIB_ISSUE;
+
+Table renamed.
+
+SQL> INSERT INTO MEMBER VALUES(&MEMBER_ID,&MEMBER_NAME,&MEMBER_ADDRESS,&ACC_OPEN_DATE,&MEMBERSHIP_TYPE,&FEE_PAID,&MAX_BOOKS_ALLOWED,&PANALTY_AMOUNT);
+Enter value for member_id: 1
+Enter value for member_name: 'RICHA SHARMA'
+Enter value for member_address: 'PUNE'
+Enter value for acc_open_date: '10-DEC-05'
+Enter value for membership_type: 'LIFETIME'
+Enter value for fee_paid: 25000
+Enter value for max_books_allowed: 5
+Enter value for panalty_amount: 50
+old   1: INSERT INTO MEMBER VALUES(&MEMBER_ID,&MEMBER_NAME,&MEMBER_ADDRESS,&ACC_OPEN_DATE,&MEMBERSHIP_TYPE,&FEE_PAID,&MAX_BOOKS_ALLOWED,&PANALTY_AMOUNT)
+new   1: INSERT INTO MEMBER VALUES(1,'RICHA SHARMA','PUNE','10-DEC-05','LIFETIME',25000,5,50)
+INSERT INTO MEMBER VALUES(1,'RICHA SHARMA','PUNE','10-DEC-05','LIFETIME',25000,5,50)
+                                                                         *
+ERROR at line 1:
+ORA-01438: value larger than specified precision allowed for this column 
 
 
+SQL> ALTER TABLE MEMBER
+  2  MODIFY FEE_PAID NUMBER(8);
+MODIFY FEE_PAID NUMBER(8)
+       *
+ERROR at line 2:
+ORA-00904: "FEE_PAID": invalid identifier 
 
-#SQL #DatabaseManagement #LibrarySystem #Project #Learning #SQLProject #OracleDB #Tech #DataManagement
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  ALTER TABLE MEMBER
+  2* MODIFY FEES_PAID NUMBER(8)
+SQL> /
+
+Table altered.
+
+SQL> INSERT INTO MEMBER VALUES(&MEMBER_ID,&MEMBER_NAME,&MEMBER_ADDRESS,&ACC_OPEN_DATE,&MEMBERSHIP_TYPE,&FEES_PAID,&MAX_BOOKS_ALLOWED,&PANALTY_AMOUNT);
+Enter value for member_id: 1
+Enter value for member_name: 'RICHA SHARMA'
+Enter value for member_address: 'PUNE'
+Enter value for acc_open_date: '10-DEC-05'
+Enter value for membership_type: 'LIFETIME'
+Enter value for fees_paid: 25000
+Enter value for max_books_allowed: 5
+Enter value for panalty_amount: 50
+old   1: INSERT INTO MEMBER VALUES(&MEMBER_ID,&MEMBER_NAME,&MEMBER_ADDRESS,&ACC_OPEN_DATE,&MEMBERSHIP_TYPE,&FEES_PAID,&MAX_BOOKS_ALLOWED,&PANALTY_AMOUNT)
+new   1: INSERT INTO MEMBER VALUES(1,'RICHA SHARMA','PUNE','10-DEC-05','LIFETIME',25000,5,50)
+
+1 row created.
+
+SQL> /
+Enter value for member_id: 2
+Enter value for member_name: 'GARIMA SEN'
+Enter value for member_address: 'PUNE'
+Enter value for acc_open_date: SYSDATE
+Enter value for membership_type: 'ANNUAL'
+Enter value for fees_paid: 1000
+Enter value for max_books_allowed: 3
+Enter value for panalty_amount: NULL
+old   1: INSERT INTO MEMBER VALUES(&MEMBER_ID,&MEMBER_NAME,&MEMBER_ADDRESS,&ACC_OPEN_DATE,&MEMBERSHIP_TYPE,&FEES_PAID,&MAX_BOOKS_ALLOWED,&PANALTY_AMOUNT)
+new   1: INSERT INTO MEMBER VALUES(2,'GARIMA SEN','PUNE',SYSDATE,'ANNUAL',1000,3,NULL)
+
+1 row created.
+
+SQL> /
+Enter value for member_id: 3
+Enter value for member_name: 'OMI PANG'
+Enter value for member_address: 'NOIDA'
+Enter value for acc_open_date: '11-JAN-05'
+Enter value for membership_type: 'HALF YEARLY'
+Enter value for fees_paid: 2000
+Enter value for max_books_allowed: 4
+Enter value for panalty_amount: 50
+old   1: INSERT INTO MEMBER VALUES(&MEMBER_ID,&MEMBER_NAME,&MEMBER_ADDRESS,&ACC_OPEN_DATE,&MEMBERSHIP_TYPE,&FEES_PAID,&MAX_BOOKS_ALLOWED,&PANALTY_AMOUNT)
+new   1: INSERT INTO MEMBER VALUES(3,'OMI PANG','NOIDA','11-JAN-05','HALF YEARLY',2000,4,50)
+
+1 row created.
+
+SQL> 4
+SP2-0226: Invalid line number 
+SQL> /
+Enter value for member_id: 4
+Enter value for member_name: 'SOU NADAR'
+Enter value for member_address: 'NASHIK'
+Enter value for acc_open_date: '15-FEB-05'
+Enter value for membership_type: 'QUARTERLY'
+Enter value for fees_paid: 3000
+Enter value for max_books_allowed: 3
+Enter value for panalty_amount: 30
+old   1: INSERT INTO MEMBER VALUES(&MEMBER_ID,&MEMBER_NAME,&MEMBER_ADDRESS,&ACC_OPEN_DATE,&MEMBERSHIP_TYPE,&FEES_PAID,&MAX_BOOKS_ALLOWED,&PANALTY_AMOUNT)
+new   1: INSERT INTO MEMBER VALUES(4,'SOU NADAR','NASHIK','15-FEB-05','QUARTERLY',3000,3,30)
+
+1 row created.
+
+SQL> /
+Enter value for member_id: 5
+Enter value for member_name: 'RADHA RANI'
+Enter value for member_address: 'DWARIKA'
+Enter value for acc_open_date: '11-AUG-05'
+Enter value for membership_type: 'LIFETIME'
+Enter value for fees_paid: 4000
+Enter value for max_books_allowed: 4
+Enter value for panalty_amount: 40
+old   1: INSERT INTO MEMBER VALUES(&MEMBER_ID,&MEMBER_NAME,&MEMBER_ADDRESS,&ACC_OPEN_DATE,&MEMBERSHIP_TYPE,&FEES_PAID,&MAX_BOOKS_ALLOWED,&PANALTY_AMOUNT)
+new   1: INSERT INTO MEMBER VALUES(5,'RADHA RANI','DWARIKA','11-AUG-05','LIFETIME',4000,4,40)
+
+1 row created.
+
+SQL> /
+Enter value for member_id: 6
+Enter value for member_name: 'SIYA RAM'
+Enter value for member_address: 'HARIDWAR'
+Enter value for acc_open_date: '12-AUG-07'
+Enter value for membership_type: 'HALF YEARLY'
+Enter value for fees_paid: 3000
+Enter value for max_books_allowed: 3
+Enter value for panalty_amount: 20
+old   1: INSERT INTO MEMBER VALUES(&MEMBER_ID,&MEMBER_NAME,&MEMBER_ADDRESS,&ACC_OPEN_DATE,&MEMBERSHIP_TYPE,&FEES_PAID,&MAX_BOOKS_ALLOWED,&PANALTY_AMOUNT)
+new   1: INSERT INTO MEMBER VALUES(6,'SIYA RAM','HARIDWAR','12-AUG-07','HALF YEARLY',3000,3,20)
+
+1 row created.
+
+SQL> /
+Enter value for member_id: 7
+Enter value for member_name: 'RATAN TATA'
+Enter value for member_address: 'THANE'
+Enter value for acc_open_date: '22-SEP-06'
+Enter value for membership_type: 'LIFETIME'
+Enter value for fees_paid: 6000
+Enter value for max_books_allowed: 2
+Enter value for panalty_amount: 20
+old   1: INSERT INTO MEMBER VALUES(&MEMBER_ID,&MEMBER_NAME,&MEMBER_ADDRESS,&ACC_OPEN_DATE,&MEMBERSHIP_TYPE,&FEES_PAID,&MAX_BOOKS_ALLOWED,&PANALTY_AMOUNT)
+new   1: INSERT INTO MEMBER VALUES(7,'RATAN TATA','THANE','22-SEP-06','LIFETIME',6000,2,20)
+
+1 row created.
+
+SQL> SELECT * FROM MEMBER;
+
+ MEMBER_ID MEMBER_NAME                    MEMBER_ADDRESS                                     ACC_OPEN_ MEMBERSHIP_TYPE       FEES_PAID MAX_BOOKS_ALLOWED PENALTY_AMOUNT                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+---------- ------------------------------ -------------------------------------------------- --------- -------------------- ---------- ----------------- --------------                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+         1 RICHA SHARMA                   PUNE                                               10-DEC-05 LIFETIME                  25000                 5             50                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+         2 GARIMA SEN                     PUNE                                               09-DEC-24 ANNUAL                     1000                 3                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+         3 OMI PANG                       NOIDA                                              11-JAN-05 HALF YEARLY                2000                 4             50                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+         4 SOU NADAR                      NASHIK                                             15-FEB-05 QUARTERLY                  3000                 3             30                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+         5 RADHA RANI                     DWARIKA                                            11-AUG-05 LIFETIME                   4000                 4             40                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+         6 SIYA RAM                       HARIDWAR                                           12-AUG-07 HALF YEARLY                3000                 3             20                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+         7 RATAN TATA                     THANE                                              22-SEP-06 LIFETIME                   6000                 2             20                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+
+7 rows selected.
+
+SQL> ALTER TABLE MEMBER
+  2  MODIFY MEMBER_NAME VARCHAR2(20);
+
+Table altered.
+
+SQL> INSERT INTO MEMBER VALUES(&MAX_BOOKS_ALLOWED);
+Enter value for max_books_allowed: 110
+old   1: INSERT INTO MEMBER VALUES(&MAX_BOOKS_ALLOWED)
+new   1: INSERT INTO MEMBER VALUES(110)
+INSERT INTO MEMBER VALUES(110)
+            *
+ERROR at line 1:
+ORA-00947: not enough values 
+
+
+SQL> ---The error occurs because 110 exceeds the 2-digit limit of NUMBER(2)---
+SQL> CREATE TABLE MEMBER101
+  2  AS
+  3  SELECT * FROM MEMBER;
+
+Table created.
+
+SQL> ALTER TABLE MEMBER
+  2  ADD CONSTRAINT CHECK_BOOKS CHECK(MAX_BOOKS_ALLOWED < 100);
+
+Table altered.
+
+SQL> ALTER TABLE MEMBER
+  2  ADD CONSTRAINT MAX_PENALTY_CONSTRAINT CHECK(PENALTY_AMOUNT <= 1000);
+
+Table altered.
+
+SQL> DROP TABLE BOOKS;
+
+Table dropped.
+
+SQL> CREATE TABLE BOOKS
+  2  (
+  3  BOOK_NO NUMBER(6) PRIMARY KEY,
+  4  BOOK_NAME VARCHAR2(30) NOT NULL,
+  5  AUTHOR_NAME VARCHAR2(30),
+  6  COST NUMBER(7,2),
+  7  CATEGORY CHAR(10),
+  8  CHECK(CATEGORY IN ('SYSTEM','SCIENCE','DATABASE','RDBMS','OTHERS'))
+  9  );
+
+Table created.
+
+SQL> INSERT INTO BOOKS VALUES(&BOOK_NO,&BOOK_NAME,&AUTHOR_NAME,&COST,&CATEGORY);
+Enter value for book_no: 101
+Enter value for book_name: 'LET US C'
+Enter value for author_name: 'DENIS RITCHIE'
+Enter value for cost: 450
+Enter value for category: 'SYSTEM'
+old   1: INSERT INTO BOOKS VALUES(&BOOK_NO,&BOOK_NAME,&AUTHOR_NAME,&COST,&CATEGORY)
+new   1: INSERT INTO BOOKS VALUES(101,'LET US C','DENIS RITCHIE',450,'SYSTEM')
+
+1 row created.
+
+SQL> /
+Enter value for book_no: 102
+Enter value for book_name: 'ORACLE COMPLETE REF'
+Enter value for author_name: 'LONI'
+Enter value for cost: 550
+Enter value for category: 'DATABASE'
+old   1: INSERT INTO BOOKS VALUES(&BOOK_NO,&BOOK_NAME,&AUTHOR_NAME,&COST,&CATEGORY)
+new   1: INSERT INTO BOOKS VALUES(102,'ORACLE COMPLETE REF','LONI',550,'DATABASE')
+
+1 row created.
+
+SQL> /
+Enter value for book_no: 103
+Enter value for book_name: 'MASTERING SQL'
+Enter value for author_name: 'LONI
+Enter value for cost: 550
+Enter value for category: 
+old   1: INSERT INTO BOOKS VALUES(&BOOK_NO,&BOOK_NAME,&AUTHOR_NAME,&COST,&CATEGORY)
+new   1: INSERT INTO BOOKS VALUES(103,'MASTERING SQL','LONI,550,)
+ERROR:
+ORA-01756: quoted string not properly terminated 
+
+
+SQL> /
+Enter value for book_no: 103
+Enter value for book_name: 'MASTERING SQL'
+Enter value for author_name: 'LONI'
+Enter value for cost: 250
+Enter value for category: 'DATABASE'
+old   1: INSERT INTO BOOKS VALUES(&BOOK_NO,&BOOK_NAME,&AUTHOR_NAME,&COST,&CATEGORY)
+new   1: INSERT INTO BOOKS VALUES(103,'MASTERING SQL','LONI',250,'DATABASE')
+
+1 row created.
+
+SQL> /
+Enter value for book_no: 104
+Enter value for book_name: 'PL SQL-REF'
+Enter value for author_name: 'SCOTT URMAN'
+Enter value for cost: 750
+Enter value for category: 'DATABASE'
+old   1: INSERT INTO BOOKS VALUES(&BOOK_NO,&BOOK_NAME,&AUTHOR_NAME,&COST,&CATEGORY)
+new   1: INSERT INTO BOOKS VALUES(104,'PL SQL-REF','SCOTT URMAN',750,'DATABASE')
+
+1 row created.
+
+SQL> /
+Enter value for book_no: 105
+Enter value for book_name: 'TOP SQL'
+Enter value for author_name: 'ALLEN'
+Enter value for cost: 850
+Enter value for category: 'FICTION'
+old   1: INSERT INTO BOOKS VALUES(&BOOK_NO,&BOOK_NAME,&AUTHOR_NAME,&COST,&CATEGORY)
+new   1: INSERT INTO BOOKS VALUES(105,'TOP SQL','ALLEN',850,'FICTION')
+INSERT INTO BOOKS VALUES(105,'TOP SQL','ALLEN',850,'FICTION')
+*
+ERROR at line 1:
+ORA-02290: check constraint (SCOTT.SYS_C006329) violated 
+
+
+SQL> /
+Enter value for book_no: 105
+Enter value for book_name: 'TOP SQL'
+Enter value for author_name: 'ALLEN'
+Enter value for cost: 850
+Enter value for category: 'RDBMS'
+old   1: INSERT INTO BOOKS VALUES(&BOOK_NO,&BOOK_NAME,&AUTHOR_NAME,&COST,&CATEGORY)
+new   1: INSERT INTO BOOKS VALUES(105,'TOP SQL','ALLEN',850,'RDBMS')
+
+1 row created.
+
+SQL> /
+Enter value for book_no: 106
+Enter value for book_name: 'SQL COOKBOOK'
+Enter value for author_name: 'OMI'
+Enter value for cost: 350
+Enter value for category: 'OTHERS'
+old   1: INSERT INTO BOOKS VALUES(&BOOK_NO,&BOOK_NAME,&AUTHOR_NAME,&COST,&CATEGORY)
+new   1: INSERT INTO BOOKS VALUES(106,'SQL COOKBOOK','OMI',350,'OTHERS')
+
+1 row created.
+
+SQL> /
+Enter value for book_no: 107
+Enter value for book_name: 'SQL HAKERS'
+Enter value for author_name: 'CORONA'
+Enter value for cost: 150
+Enter value for category: 'RDBMS'
+old   1: INSERT INTO BOOKS VALUES(&BOOK_NO,&BOOK_NAME,&AUTHOR_NAME,&COST,&CATEGORY)
+new   1: INSERT INTO BOOKS VALUES(107,'SQL HAKERS','CORONA',150,'RDBMS')
+
+1 row created.
+
+SQL> SELECT * FROM BOOKS;
+
+   BOOK_NO BOOK_NAME                      AUTHOR_NAME                          COST CATEGORY                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+---------- ------------------------------ ------------------------------ ---------- ----------                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+       101 LET US C                       DENIS RITCHIE                         450 SYSTEM                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+       102 ORACLE COMPLETE REF            LONI                                  550 DATABASE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+       103 MASTERING SQL                  LONI                                  250 DATABASE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+       104 PL SQL-REF                     SCOTT URMAN                           750 DATABASE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+       105 TOP SQL                        ALLEN                                 850 RDBMS                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+       106 SQL COOKBOOK                   OMI                                   350 OTHERS                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+       107 SQL HAKERS                     CORONA                                150 RDBMS                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+
+7 rows selected.
+
+SQL> CREATE TABLE BOOK101
+  2  AS
+  3  SELECT * FROM BOOKS
+  4  WHERE 1 = 0;
+
+Table created.
+
+SQL> SELECT * FROM BOOK101;
+
+no rows selected
+
+SQL> INSERT INTO BOOK101
+  2  SELECT * FROM BOOKS;
+
+7 rows created.
+
+SQL> 
+SQL> SELECT * FROM BOOKS;
+
+   BOOK_NO BOOK_NAME                      AUTHOR_NAME                          COST CATEGORY                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+---------- ------------------------------ ------------------------------ ---------- ----------                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+       101 LET US C                       DENIS RITCHIE                         450 SYSTEM                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+       102 ORACLE COMPLETE REF            LONI                                  550 DATABASE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+       103 MASTERING SQL                  LONI                                  250 DATABASE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+       104 PL SQL-REF                     SCOTT URMAN                           750 DATABASE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+       105 TOP SQL                        ALLEN                                 850 RDBMS                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+       106 SQL COOKBOOK                   OMI                                   350 OTHERS                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+       107 SQL HAKERS                     CORONA                                150 RDBMS                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+
+7 rows selected.
+
+SQL> SELECT * FROM BOOK101;
+
+   BOOK_NO BOOK_NAME                      AUTHOR_NAME                          COST CATEGORY                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+---------- ------------------------------ ------------------------------ ---------- ----------                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+       101 LET US C                       DENIS RITCHIE                         450 SYSTEM                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+       102 ORACLE COMPLETE REF            LONI                                  550 DATABASE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+       103 MASTERING SQL                  LONI                                  250 DATABASE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+       104 PL SQL-REF                     SCOTT URMAN                           750 DATABASE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+       105 TOP SQL                        ALLEN                                 850 RDBMS                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+       106 SQL COOKBOOK                   OMI                                   350 OTHERS                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+       107 SQL HAKERS                     CORONA                                150 RDBMS                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+
+7 rows selected.
+
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> INSERT INTO BOOKS VALUES(&BOOK_NO,&BOOK_NAME,&AUTHOR_NAME,&COST,&CATEGORY);
+Enter value for book_no: 105
+Enter value for book_name: 'NATIONAL GEOGRAPHIC'
+Enter value for author_name: 'ADIS SCOTT,
+Enter value for cost: 1000
+Enter value for category: 'SCIENCE'
+old   1: INSERT INTO BOOKS VALUES(&BOOK_NO,&BOOK_NAME,&AUTHOR_NAME,&COST,&CATEGORY)
+new   1: INSERT INTO BOOKS VALUES(105,'NATIONAL GEOGRAPHIC','ADIS SCOTT,,1000,'SCIENCE')
+ERROR:
+ORA-01756: quoted string not properly terminated 
+
+
+SQL> /
+Enter value for book_no: 105
+Enter value for book_name:  'NATIONAL GEOGRAPHIC'
+Enter value for author_name: 'ADIS SCOTT'
+Enter value for cost: 1000
+Enter value for category: 'SCIENCE'
+old   1: INSERT INTO BOOKS VALUES(&BOOK_NO,&BOOK_NAME,&AUTHOR_NAME,&COST,&CATEGORY)
+new   1: INSERT INTO BOOKS VALUES(105, 'NATIONAL GEOGRAPHIC','ADIS SCOTT',1000,'SCIENCE')
+INSERT INTO BOOKS VALUES(105, 'NATIONAL GEOGRAPHIC','ADIS SCOTT',1000,'SCIENCE')
+*
+ERROR at line 1:
+ORA-00001: unique constraint (SCOTT.SYS_C006330) violated 
+
+
+SQL> ALTER TABLE BOOKS
+  2  MODIFY BOOK_NO NUMBER(6);
+
+Table altered.
+
+SQL>  INSERT INTO BOOKS VALUES(&BOOK_NO,&BOOK_NAME,&AUTHOR_NAME,&COST,&CATEGORY);
+Enter value for book_no: 105
+Enter value for book_name: 'NATIONAL GEOGRAPHIC'
+Enter value for author_name: 'ADIS SCOTT'
+Enter value for cost: 1000
+Enter value for category: 'SCIENCE'
+old   1:  INSERT INTO BOOKS VALUES(&BOOK_NO,&BOOK_NAME,&AUTHOR_NAME,&COST,&CATEGORY)
+new   1:  INSERT INTO BOOKS VALUES(105,'NATIONAL GEOGRAPHIC','ADIS SCOTT',1000,'SCIENCE')
+ INSERT INTO BOOKS VALUES(105,'NATIONAL GEOGRAPHIC','ADIS SCOTT',1000,'SCIENCE')
+*
+ERROR at line 1:
+ORA-00001: unique constraint (SCOTT.SYS_C006330) violated 
+
+
+SQL> ALTER TABLE BOOKS
+  2  MODIFY BOOK_NO NUMBER(6) NOT NULL;
+
+Table altered.
+
+SQL>  INSERT INTO BOOKS VALUES(&BOOK_NO,&BOOK_NAME,&AUTHOR_NAME,&COST,&CATEGORY);
+Enter value for book_no: 105
+Enter value for book_name: 'NATIONAL GEOGRAPHIC'
+Enter value for author_name: 'ADIS SCOTT'
+Enter value for cost: 1000
+Enter value for category: 'SCIENCE'
+old   1:  INSERT INTO BOOKS VALUES(&BOOK_NO,&BOOK_NAME,&AUTHOR_NAME,&COST,&CATEGORY)
+new   1:  INSERT INTO BOOKS VALUES(105,'NATIONAL GEOGRAPHIC','ADIS SCOTT',1000,'SCIENCE')
+ INSERT INTO BOOKS VALUES(105,'NATIONAL GEOGRAPHIC','ADIS SCOTT',1000,'SCIENCE')
+*
+ERROR at line 1:
+ORA-00001: unique constraint (SCOTT.SYS_C006330) violated 
+
+
+SQL> 
+SQL> DELETE FROM BOOKS
+  2  WHERE BOOK_NO = 105;
+
+1 row deleted.
+
+SQL> INSERT INTO BOOKS VALUES(&BOOK_NO,&BOOK_NAME,&AUTHOR_NAME,&COST,&CATEGORY);
+Enter value for book_no: 105
+Enter value for book_name: 'NATIONAL GEIGRAPHIC'
+Enter value for author_name: 'ADIS SCOTT'
+Enter value for cost: 1000
+Enter value for category: 'SCIENCE'
+old   1: INSERT INTO BOOKS VALUES(&BOOK_NO,&BOOK_NAME,&AUTHOR_NAME,&COST,&CATEGORY)
+new   1: INSERT INTO BOOKS VALUES(105,'NATIONAL GEIGRAPHIC','ADIS SCOTT',1000,'SCIENCE')
+
+1 row created.
+
+SQL> ROLLBACK;
+
+Rollback complete.
+
+SQL> UPDATE BOOKS
+  2  SET COST = 300 , CATEGORY = 'RDBMS'
+  3  WHERE BOOK_NO = 103;
+
+1 row updated.
+
+SQL> 
+SQL> RENAME LIB_ISSUE TO ISSUE;
+
+Table renamed.
+
+SQL> CREATE TABLE ISSUE
+  2  (
+  3  LIB_ISSUE_ID NUMBER(10) PRIMARY KEY,
+  4  BOOK_NO NUMBER(10) REFERENCES BOOKS(BOOK_NO),
+  5  MEMBER_ID NUMBER(5) REFERENCES MEMBER(MEMBER_ID),
+  6  ISSUE_DATE DATE,
+  7  RETURN_DATE DATE,
+  8  CONSTRAINT ISSUE_RETURN_DATE_CHECK CHECK (RETURN_DATE > ISSUE_DATE)
+  9  );
+CREATE TABLE ISSUE
+             *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object 
+
+
+SQL> 
+SQL> DROP TABLE ISSUE;
+
+Table dropped.
+
+SQL> CREATE TABLE ISSUE
+  2  (
+  3  LIB_ISSUE_ID NUMBER(10) PRIMARY KEY,
+  4  BOOK_NO NUMBER(10) REFERENCES BOOKS(BOOK_NO),
+  5  MEMBER_ID NUMBER(5) REFERENCES MEMBER(MEMBER_ID),
+  6  ISSUE_DATE DATE,
+  7  RETURN_DATE DATE,
+  8  CONSTRAINT ISSUE_RETURN_DATE_CHECK CHECK (RETURN_DATE > ISSUE_DATE)
+  9  );
+
+Table created.
+
+SQL> INSERT INTO ISSUE VALUES(&LIB_ISSUE_ID,&BOOK_NO,&MEMBER_ID,&ISSUE_DATE,&RETURN_DATE);
+Enter value for lib_issue_id: 7001
+Enter value for book_no: 101
+Enter value for member_id: 1
+Enter value for issue_date: '10-DEC-06'
+Enter value for return_date: NULL
+old   1: INSERT INTO ISSUE VALUES(&LIB_ISSUE_ID,&BOOK_NO,&MEMBER_ID,&ISSUE_DATE,&RETURN_DATE)
+new   1: INSERT INTO ISSUE VALUES(7001,101,1,'10-DEC-06',NULL)
+
+1 row created.
+
+SQL> /
+Enter value for lib_issue_id: 7002
+Enter value for book_no: 102
+Enter value for member_id: 2
+Enter value for issue_date: '25-DEC-06'
+Enter value for return_date: NULL
+old   1: INSERT INTO ISSUE VALUES(&LIB_ISSUE_ID,&BOOK_NO,&MEMBER_ID,&ISSUE_DATE,&RETURN_DATE)
+new   1: INSERT INTO ISSUE VALUES(7002,102,2,'25-DEC-06',NULL)
+
+1 row created.
+
+SQL> /
+Enter value for lib_issue_id: 7003
+Enter value for book_no: 104
+Enter value for member_id: 1
+Enter value for issue_date: '15-JAN-06'
+Enter value for return_date: NULL
+old   1: INSERT INTO ISSUE VALUES(&LIB_ISSUE_ID,&BOOK_NO,&MEMBER_ID,&ISSUE_DATE,&RETURN_DATE)
+new   1: INSERT INTO ISSUE VALUES(7003,104,1,'15-JAN-06',NULL)
+
+1 row created.
+
+SQL> /
+Enter value for lib_issue_id: 7004
+Enter value for book_no: 101
+Enter value for member_id: 1
+Enter value for issue_date: '04-JULY-06'
+Enter value for return_date: NULL
+old   1: INSERT INTO ISSUE VALUES(&LIB_ISSUE_ID,&BOOK_NO,&MEMBER_ID,&ISSUE_DATE,&RETURN_DATE)
+new   1: INSERT INTO ISSUE VALUES(7004,101,1,'04-JULY-06',NULL)
+
+1 row created.
+
+SQL> /
+Enter value for lib_issue_id: 7005
+Enter value for book_no: 104
+Enter value for member_id: 2
+Enter value for issue_date: '15-NOV-06'
+Enter value for return_date: NULL
+old   1: INSERT INTO ISSUE VALUES(&LIB_ISSUE_ID,&BOOK_NO,&MEMBER_ID,&ISSUE_DATE,&RETURN_DATE)
+new   1: INSERT INTO ISSUE VALUES(7005,104,2,'15-NOV-06',NULL)
+
+1 row created.
+
+SQL> /
+Enter value for lib_issue_id: 7006
+Enter value for book_no: 101
+Enter value for member_id: 3
+Enter value for issue_date: '18-FEB-06'
+Enter value for return_date: NULL
+old   1: INSERT INTO ISSUE VALUES(&LIB_ISSUE_ID,&BOOK_NO,&MEMBER_ID,&ISSUE_DATE,&RETURN_DATE)
+new   1: INSERT INTO ISSUE VALUES(7006,101,3,'18-FEB-06',NULL)
+
+1 row created.
+
+SQL> SELECT * FROM ISSUE;
+
+LIB_ISSUE_ID    BOOK_NO  MEMBER_ID ISSUE_DAT RETURN_DA                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+------------ ---------- ---------- --------- ---------                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+        7001        101          1 10-DEC-06                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+        7002        102          2 25-DEC-06                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+        7003        104          1 15-JAN-06                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+        7004        101          1 04-JUL-06                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+        7005        104          2 15-NOV-06                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+        7006        101          3 18-FEB-06                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+
+6 rows selected.
+
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> ALTER TABLE ISSUE DISABLE CONSTRAINT ISSUE_RETURN_DATE_CHECK;
+
+Table altered.
+
+SQL> INSERT INTO ISSUE (LIB_ISSUE_ID, BOOK_NO, MEMBER_ID, ISSUE_DATE, RETURN_DATE)
+  2  VALUES(7007,101,2,SYSDATE,NULL);
+
+1 row created.
+
+SQL> ALTER TABLE ISSUE
+  2  ENABLE CONSTRAINT ISSUE_RETURN_DATE_CHECK;
+
+Table altered.
+
+SQL> DELETE FROM ISSUE
+  2  WHERE ISSUE_ID = 7006;
+WHERE ISSUE_ID = 7006
+      *
+ERROR at line 2:
+ORA-00904: "ISSUE_ID": invalid identifier 
+
+
+SQL> DELETE FROM ISSUE
+  2  FROM LIB_ISSUE_ID = 7007;
+FROM LIB_ISSUE_ID = 7007
+*
+ERROR at line 2:
+ORA-00933: SQL command not properly ended 
+
+
+SQL> DELETE FROM ISSUE
+  2  WHERE LIB_ISSUE_ID = 7007;
+
+1 row deleted.
+
+SQL> ---Try to delete the record of member id 1 from member table---
+SQL> DELETE FROM MEMBER
+  2  WHERE MEMBER_ID = 1;
+DELETE FROM MEMBER
+*
+ERROR at line 1:
+ORA-02292: integrity constraint (SCOTT.SYS_C006336) violated - child record found 
+
+
+SQL> UPDATE ISSUE
+  2  SET RETURN_DATE = ISSUE_DATE + 15
+  3  WHERE LIB_ISSUE_ID IN (7004, 7005)
+  4  ;
+
+2 rows updated.
+
+SQL> SELECT * FROM ISSUE;
+
+LIB_ISSUE_ID    BOOK_NO  MEMBER_ID ISSUE_DAT RETURN_DA                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+------------ ---------- ---------- --------- ---------                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+        7001        101          1 10-DEC-06                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+        7002        102          2 25-DEC-06                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+        7003        104          1 15-JAN-06                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+        7004        101          1 04-JUL-06 19-JUL-06                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+        7005        104          2 15-NOV-06 30-NOV-06                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+        7006        101          3 18-FEB-06                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+
+6 rows selected.
+
+SQL> UPDATE MEMBER
+  2  SET PENALTY_AMOUNT = 100
+  3  WHERE MEMBER_NAME= 'GARIMA SEN';
+
+1 row updated.
+
+SQL> SELECT * FROM MEMBER;
+
+ MEMBER_ID MEMBER_NAME          MEMBER_ADDRESS                                     ACC_OPEN_ MEMBERSHIP_TYPE       FEES_PAID MAX_BOOKS_ALLOWED PENALTY_AMOUNT                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+---------- -------------------- -------------------------------------------------- --------- -------------------- ---------- ----------------- --------------                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+         1 RICHA SHARMA         PUNE                                               10-DEC-05 LIFETIME                  25000                 5             50                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+         2 GARIMA SEN           PUNE                                               09-DEC-24 ANNUAL                     1000                 3            100                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+         3 OMI PANG             NOIDA                                              11-JAN-05 HALF YEARLY                2000                 4             50                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+         4 SOU NADAR            NASHIK                                             15-FEB-05 QUARTERLY                  3000                 3             30                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+         5 RADHA RANI           DWARIKA                                            11-AUG-05 LIFETIME                   4000                 4             40                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+         6 SIYA RAM             HARIDWAR                                           12-AUG-07 HALF YEARLY                3000                 3             20                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+         7 RATAN TATA           THANE                                              22-SEP-06 LIFETIME                   6000                 2             20                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+
+7 rows selected.
+
+SQL> SAVEPOINT X ;
+
+Savepoint created.
+
+SQL> DELETE
+  2  FROM ISSUE
+  3  WHERE MEMBER_ID = 1 AND ISSUE_DATE < '10-DEC-06;
+ERROR:
+ORA-01756: quoted string not properly terminated 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  DELETE
+  2  FROM ISSUE
+  3* WHERE MEMBER_ID = 1 AND ISSUE_DATE < '10-DEC-06'
+SQL> /
+
+2 rows deleted.
+
+SQL> DELETE
+  2  FROM BOOK
+  3  WHERE CATEGORY NOT IN ('RDBMS','DATABASE');
+FROM BOOK
+     *
+ERROR at line 2:
+ORA-00942: table or view does not exist 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  DELETE
+  2  FROM BOOKS
+  3* WHERE CATEGORY NOT IN ('RDBMS','DATABASE')
+SQL> /
+DELETE
+*
+ERROR at line 1:
+ORA-02292: integrity constraint (SCOTT.SYS_C006335) violated - child record found 
+
+
+SQL> DELETE FROM BOOKS WHERE CATEGORY NOT IN ('RDBMS', 'DATABASE');
+DELETE FROM BOOKS WHERE CATEGORY NOT IN ('RDBMS', 'DATABASE')
+*
+ERROR at line 1:
+ORA-02292: integrity constraint (SCOTT.SYS_C006335) violated - child record found 
+
+
+SQL> SET Y KEY,
+SP2-0158: unknown SET option "Y"
+SQL> SET REFERENCES = 0 ;
+SP2-0158: unknown SET option "REFERENCES"
+SQL> ALTER TABLE BOOKS
+  2  DISABLE CONSRAINT ALL;
+DISABLE CONSRAINT ALL
+        *
+ERROR at line 2:
+ORA-00905: missing keyword 
+
+
+SQL>  ALTER TABLE BOOKS
+  2  DISABLE CONSTRAINT ALL;
+DISABLE CONSTRAINT ALL
+                   *
+ERROR at line 2:
+ORA-02250: missing or invalid constraint name 
+
+
+SQL> ROLLBACK TO X;
+
+Rollback complete.
+
+SQL> ---SAVE CHANGES---
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> DROP TABLE MEMBER101;
+
+Table dropped.
+
+SQL> DROP TABLE BOOK101;
+
+Table dropped.
+
+SQL> SELECT * FROM MEMBER;
+
+ MEMBER_ID MEMBER_NAME          MEMBER_ADDRESS                                     ACC_OPEN_ MEMBERSHIP_TYPE       FEES_PAID MAX_BOOKS_ALLOWED PENALTY_AMOUNT                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+---------- -------------------- -------------------------------------------------- --------- -------------------- ---------- ----------------- --------------                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+         1 RICHA SHARMA         PUNE                                               10-DEC-05 LIFETIME                  25000                 5             50                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+         2 GARIMA SEN           PUNE                                               09-DEC-24 ANNUAL                     1000                 3            100                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+         3 OMI PANG             NOIDA                                              11-JAN-05 HALF YEARLY                2000                 4             50                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+         4 SOU NADAR            NASHIK                                             15-FEB-05 QUARTERLY                  3000                 3             30                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+         5 RADHA RANI           DWARIKA                                            11-AUG-05 LIFETIME                   4000                 4             40                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+         6 SIYA RAM             HARIDWAR                                           12-AUG-07 HALF YEARLY                3000                 3             20                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+         7 RATAN TATA           THANE                                              22-SEP-06 LIFETIME                   6000                 2             20                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+
+7 rows selected.
+
+SQL> SELECT * FROM BOOKS;
+
+   BOOK_NO BOOK_NAME                      AUTHOR_NAME                          COST CATEGORY                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+---------- ------------------------------ ------------------------------ ---------- ----------                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+       101 LET US C                       DENIS RITCHIE                         450 SYSTEM                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+       102 ORACLE COMPLETE REF            LONI                                  550 DATABASE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+       103 MASTERING SQL                  LONI                                  300 RDBMS                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+       104 PL SQL-REF                     SCOTT URMAN                           750 DATABASE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+       105 TOP SQL                        ALLEN                                 850 RDBMS                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+       106 SQL COOKBOOK                   OMI                                   350 OTHERS                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+       107 SQL HAKERS                     CORONA                                150 RDBMS                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+
+7 rows selected.
+
+SQL> SELECT * FROM ISSUE;
+
+LIB_ISSUE_ID    BOOK_NO  MEMBER_ID ISSUE_DAT RETURN_DA                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+------------ ---------- ---------- --------- ---------                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+        7001        101          1 10-DEC-06                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+        7002        102          2 25-DEC-06                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+        7003        104          1 15-JAN-06                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+        7004        101          1 04-JUL-06 19-JUL-06                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+        7005        104          2 15-NOV-06 30-NOV-06                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+        7006        101          3 18-FEB-06                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+
+6 rows selected.
+
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> SPOOL OFF;
